@@ -3,7 +3,7 @@
 public class SpaceShip : MonoBehaviour
 {
     //При столкновении с чем-либо
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         //При столкновении с астероидом или другим кораблем
         if (other.gameObject.CompareTag("Asteroid") || other.gameObject.CompareTag("SpaceShip"))
@@ -11,11 +11,11 @@ public class SpaceShip : MonoBehaviour
             Destruction(other);
         }
         //При столкновении с пулей
-        if (other.gameObject.name.Contains("Bullet"))
+        else if (other.gameObject.name.Contains("Bullet"))
         {
             //Если пуля соперника
-            if (other.gameObject.GetComponent<Bullet>().type == 0 && !name.Contains("Rocket") 
-                || (other.gameObject.GetComponent<Bullet>().type == 1 && !name.Contains("UFO")))
+            if ((other.gameObject.GetComponent<Bullet>().type == 0 && !gameObject.name.Contains("Rocket"))
+                || (other.gameObject.GetComponent<Bullet>().type == 1 && !gameObject.name.Contains("UFO")))
                 Destruction(other);
         }
     }

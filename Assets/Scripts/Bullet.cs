@@ -41,22 +41,17 @@ public class Bullet : MonoBehaviour
             //Вычисляем фактические коориданаты
             Vector3 PositionInWorld = transform.position;
             //Проверяем на выход и меняем координаты
-            if (PositionOnScreen.x > Screen.width)
-                PositionInWorld.x = -PositionInWorld.x + 1;
-            if (PositionOnScreen.x < 0)
-                PositionInWorld.x = -PositionInWorld.x - 1;
-            if (PositionOnScreen.y > Screen.height)
-                PositionInWorld.z = -PositionInWorld.z + 1;
-            if (PositionOnScreen.y < 0)
-                PositionInWorld.z = -PositionInWorld.z - 1;
+            if ((PositionOnScreen.x > Screen.width) || (PositionOnScreen.x < 0) ||
+                (PositionOnScreen.y > Screen.height) || (PositionOnScreen.y < 0))
+                gameObject.SetActive(false);
             //Устанавливаем новую позицию
             transform.position = PositionInWorld;
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        //Проверка на хозяина пули дял избежания самоуничтожения
+        //Проверка на хозяина пули для избежания самоуничтожения
         if((!other.gameObject.name.Contains("Rocket") && type == 0)
             || (!other.gameObject.name.Contains("UFO") && type == 1))
             gameObject.SetActive(false);

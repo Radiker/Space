@@ -82,7 +82,8 @@ public class UFO : SpaceShip
             {
                 GameObject bulletObject = PooledGameObject.Instance.GetBullet();
                 bulletObject.transform.position = gameObject.transform.position;
-                bulletObject.transform.LookAt(main.Rocket.transform.position);
+                bulletObject.transform.LookAt(GameObject.Find(main.Rocket.name+"(Clone)").transform.position);
+                
                 bulletObject.GetComponent<Bullet>().SetType(1);
                 TimerFire += Random.Range(MinTimeFire, MaxTimeFire);
             }
@@ -111,7 +112,7 @@ public class UFO : SpaceShip
     public override void Destruction(Collider other)
     {
         //Если столкнулись с пулей
-        if(other.name.Contains("Bullet"))
+        if(other.gameObject.name.Contains("Bullet"))
             main.AddPoints(Points);
         //Обновляем время появления нового НЛО
         main.DestroyUFO();

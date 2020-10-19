@@ -42,6 +42,21 @@ public class Main : MonoBehaviour
         GamePanel.SetActive(false);
         ButtonContinue.interactable = false;
         audioSource = GetComponent<AudioSource>();
+
+        string key = "ControlWithMouse";
+        if (PlayerPrefs.HasKey(key))
+        {
+            if (PlayerPrefs.GetInt(key) == 1)
+            {
+                this.ControlWithMouse = true;
+                GameObject.Find("ButtonControl").GetComponentInChildren<Text>().text = "Управление: клавиатура + мышь";
+            }
+            else
+            {
+                this.ControlWithMouse = false;
+                GameObject.Find("ButtonControl").GetComponentInChildren<Text>().text = "Управление: клавиатура";
+            }
+        }
     }
 
     // Update is called once per frame
@@ -110,11 +125,22 @@ public class Main : MonoBehaviour
         if (ControlWithMouse)
             GameObject.Find("ButtonControl").GetComponentInChildren<Text>().text = "Управление: клавиатура + мышь";
         else
-            GameObject.Find("ButtonControl").GetComponentInChildren<Text>().text = "Управление: клавиатура";
+            GameObject.Find("ButtonControl").GetComponentInChildren<Text>().text = "Управление: клавиатура"; string key = "ControlWithMouse";
+        if (ControlWithMouse)
+            PlayerPrefs.SetInt(key, 1);
+        else
+            PlayerPrefs.SetInt(key, 0);
+        PlayerPrefs.Save();
     }
 
     public void Exit()
     {
+        string key = "ControlWithMouse";
+        if(ControlWithMouse)
+            PlayerPrefs.SetInt(key, 1);
+        else
+            PlayerPrefs.SetInt(key, 0);
+        PlayerPrefs.Save();
         Application.Quit();
     }
 

@@ -41,15 +41,23 @@ public class Asteroid : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         //Если столкнулся с ракетой и неуязвимой
         if (other.gameObject.name.Contains("Rocket"))
             if (!other.gameObject.GetComponent<Rocket>().Invulnerability)
-                Destruction();
+            {
+                main.SetAudio(GetComponent<AudioSource>().clip);
+                main.ChangeNumberOfAsteroids(-1);
+                Destroy(gameObject);
+            }
         //Если столкнулся с НЛО
         if (other.gameObject.name.Contains("UFO"))
-            Destruction();
+        {
+            main.SetAudio(GetComponent<AudioSource>().clip);
+            main.ChangeNumberOfAsteroids(-1);
+            Destroy(gameObject);
+        }
         //Если столкнулся с пулей
         if (other.gameObject.name.Contains("Bullet"))
         {
